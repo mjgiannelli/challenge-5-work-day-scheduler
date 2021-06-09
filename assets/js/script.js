@@ -14,3 +14,9 @@
 // when user clicks the save button icon the text for the event saves into local storage via an array object
 // when user refreshes page - get the object array from local storage and recreate the events on the page
 
+//target <p> element for currentDay to display
+var currentDayEl = $('#currentDay')
+
+//add current day to <p> tag in jumbotron
+var currentDay = moment().format('dddd, MMMM Do');
+currentDayEl.text(currentDay);
