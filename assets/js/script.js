@@ -36,6 +36,11 @@ var workDayHours = [
 ];
 //target the div that holds the time block hour
 var timeBlockHour = $('col-1 hour')
+//target the div that holds the appointment info
+var appointment = $('.description')
+
+// set object array to empty
+var appointments = {};
 
 // ** END GLOBAL VARIABLES ** //
 
@@ -73,23 +78,32 @@ for (var i = 0; i < workDayHours.length; i++) {
     //add div with class row
     var timeBlockRow = $('<div>')
         .addClass('row time-block')
+        .attr({
+            id: 'row-' + (i + 9)
+        })
 
     // add 1 div with class hour
     var timeBlockHour = $('<div>')
         .addClass('col-1 hour')
         .text(workDayHours[i])
+        .attr({
+            id: i + 9
+        })
 
     // add 1 div with class
     var timeBlockEventSpace = $('<div>')
         .addClass('col-10')
         .attr({
-            id: 'Hour-' + i
-        });
+            id: 'time-block-' + (i + 9)
+        })
 
     // add p element with class of description
     var userInput = $('<p>')
         .addClass('description')
-        .text(' ');
+        .text(' ')
+        .attr({
+            id: 'Hour-' + (i + 9)
+        });
 
     //check time
     auditTimeBlock(timeBlockEventSpace);
@@ -98,9 +112,14 @@ for (var i = 0; i < workDayHours.length; i++) {
     var saveBtn = $('<button>')
         .addClass('col-1 saveBtn')
         .attr({
-            id: 'save-button',
+            id: 'save-button-' + (i + 9),
             type: 'button',
-        });
+        })
+        .on('click', function () {
+            var hour = $(this).siblings().slice(1).children().text();
+            console.log(this);
+            console.log(hour);
+        })
 
     // add save icon
     var saveIcon = $('<i>')
@@ -118,6 +137,11 @@ for (var i = 0; i < workDayHours.length; i++) {
     $(timeBlockRow).append(saveBtn);
     //append save icon to save button
     $(saveBtn).append(saveIcon);
+}
+
+// create function to save tasks 
+function saveAppointment() {
+
 }
 
 // add functionality so when user clicks into time block:
@@ -155,4 +179,8 @@ $('.col-10').on('blur', 'textarea', function () {
     $(this).replaceWith(userTextP);
 })
 
+// $('.saveBtn').on('click', function () {
+
+//     console.log(this);
+// })
 
