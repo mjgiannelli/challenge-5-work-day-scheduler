@@ -62,7 +62,7 @@ function auditTimeBlock(timeBlockEventSpace) {
     //remove class of 'past present future
     $(timeBlockEventSpace).removeClass('past present future');
 
-    //if currentTimeBlockHour
+    //conditional to add correct color background to time block depending on time
     if (currentTimeBlockHour > currentHour) {
         $(timeBlockEventSpace).addClass('future');
     }
@@ -197,6 +197,7 @@ $('.col-10').on('blur', 'textarea', function () {
     $(this).replaceWith(userTextP);
 })
 
+// to load tasks on every refresh
 loadTask();
 
 
