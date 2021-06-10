@@ -1,3 +1,5 @@
+// ** START PSEUDO CODE (subject to change) ** //
+
 // add current day to display at top of page under header
 //  - will add text content of current day and append to the <p> element in the header in the format 'Name of Day', 'Full name of month', 'Numerical Day with suffix th or st'
 // add time blocks to div container using jquery (3 columns in a row, 9 rows):
@@ -13,6 +15,8 @@
 //  - hardcode the content on blur
 // when user clicks the save button icon the text for the event saves into local storage via an array object
 // when user refreshes page - get the object array from local storage and recreate the events on the page
+
+// ** END PSEUDO CODE ** //
 
 // ** GLOBAL VARIABLES ** // 
 
@@ -36,11 +40,8 @@ var workDayHours = [
 ];
 //target the div that holds the time block hour
 var timeBlockHour = $('col-1 hour')
-//target the div that holds the appointment info
-var appointment = $('.description')
-
-// set object array to empty
-var appointments = {};
+//target the div that holds the task info
+var task = $('.description')
 
 // ** END GLOBAL VARIABLES ** //
 
@@ -71,6 +72,25 @@ function auditTimeBlock(timeBlockEventSpace) {
     else {
         $(timeBlockEventSpace).addClass('past');
     }
+}
+// create function to load tasks
+function loadTask() {
+
+    //create for loop to get task for each hour
+    //hour is the indexes of workDayHours
+    //task is the value of <p> at that index
+
+    for (var i = 0; i < workDayHours.length; i++) {
+        let task = localStorage.getItem(workDayHours[i])
+
+        if (task) {
+            $('#' + (i + 9)).siblings().first().children().text(task);
+        }
+    }
+}
+// create function to save task
+function saveTask(hour, task) {
+    localStorage.setItem(hour, task);
 }
 
 //add time blocks for each hour (3 columns in 9 rows: 9AM to 5PM) format for 9AM is hA
@@ -119,10 +139,11 @@ for (var i = 0; i < workDayHours.length; i++) {
             // retrieve the hour of the timeblock
             var hour = $(this).siblings().first().text();
             // retrieve the value in <p> element
-            var appointment = $(this).siblings().last().text();
+            var task = $(this).siblings().last().text();
 
             //save to local storage
-            saveAppointment(hour, appointment)
+            saveTask(hour, task)
+
         })
 
     // add save icon
@@ -143,18 +164,9 @@ for (var i = 0; i < workDayHours.length; i++) {
     $(saveBtn).append(saveIcon);
 }
 
-// create function to save tasks 
-function saveAppointment(hour, appointment) {
-
-    localStorage.setItem(hour, appointment);
-}
-
 // add functionality so when user clicks into time block:
-//  - can edit the text content on focus
-//  - hardcode the content on blur
-
+// edit the text content on focus
 $('.col-10').on('click', 'p', function () {
-    console.log('clicked');
 
     var text = $(this)
         .text()
@@ -169,6 +181,7 @@ $('.col-10').on('click', 'p', function () {
     textInput.trigger('focus');
 });
 
+//  - hardcode the <p> content on blur
 $('.col-10').on('blur', 'textarea', function () {
     // get the textarea's current value/text
     var text = $(this)
@@ -184,8 +197,6 @@ $('.col-10').on('blur', 'textarea', function () {
     $(this).replaceWith(userTextP);
 })
 
-// $('.saveBtn').on('click', function () {
+loadTask();
 
-//     console.log(this);
-// })
 
