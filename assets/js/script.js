@@ -116,9 +116,13 @@ for (var i = 0; i < workDayHours.length; i++) {
             type: 'button',
         })
         .on('click', function () {
-            var hour = $(this).siblings().slice(1).children().text();
-            console.log(this);
-            console.log(hour);
+            // retrieve the hour of the timeblock
+            var hour = $(this).siblings().first().text();
+            // retrieve the value in <p> element
+            var appointment = $(this).siblings().last().text();
+
+            //save to local storage
+            saveAppointment(hour, appointment)
         })
 
     // add save icon
@@ -140,8 +144,9 @@ for (var i = 0; i < workDayHours.length; i++) {
 }
 
 // create function to save tasks 
-function saveAppointment() {
+function saveAppointment(hour, appointment) {
 
+    localStorage.setItem(hour, appointment);
 }
 
 // add functionality so when user clicks into time block:
