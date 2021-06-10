@@ -78,14 +78,18 @@ for (var i = 0; i < workDayHours.length; i++) {
     var timeBlockHour = $('<div>')
         .addClass('col-1 hour')
         .text(workDayHours[i])
-    // .attr('style', 'text-align: right');
 
-    // add 1 div with class time-block
+    // add 1 div with class
     var timeBlockEventSpace = $('<div>')
-        .addClass('col-10 description')
+        .addClass('col-10')
         .attr({
             id: 'Hour-' + i
         });
+
+    // add p element with class of description
+    var userInput = $('<p>')
+        .addClass('description')
+        .text(' ');
 
     //check time
     auditTimeBlock(timeBlockEventSpace);
@@ -108,13 +112,47 @@ for (var i = 0; i < workDayHours.length; i++) {
     $(timeBlockRow).append(timeBlockHour);
     //append timeBlockEventSpace to timeBlockRow
     $(timeBlockRow).append(timeBlockEventSpace);
+    //append <p> element to timeBlockEventSpace
+    $(timeBlockEventSpace).append(userInput);
     //append save button to timeBlowRow
     $(timeBlockRow).append(saveBtn);
     //append save icon to save button
     $(saveBtn).append(saveIcon);
 }
 
+// add functionality so when user clicks into time block:
+//  - can edit the text content on focus
+//  - hardcode the content on blur
 
+$('.col-10').on('click', 'p', function () {
+    console.log('clicked');
 
+    var text = $(this)
+        .text()
+        .trim()
+
+    var textInput = $('<textarea>')
+        .addClass('form-control')
+        .val(text);
+
+    $(this).replaceWith(textInput);
+
+    textInput.trigger('focus');
+});
+
+$('.col-10').on('blur', 'textarea', function () {
+    // get the textarea's current value/text
+    var text = $(this)
+        .val()
+        .trim();
+
+    // recreate p element
+    var userTextP = $("<p>")
+        .addClass("description")
+        .text(text);
+
+    // replace textarea with p element
+    $(this).replaceWith(userTextP);
+})
 
 
