@@ -13,4 +13,4 @@
 ![Work Day Scheduler Homepage](assets/images/work-day-scheduler.png)
 
 ## Link to Portfolio Website
-[Scheduler Deployed Website](https://mjgiannelli.github.io/challenge-5-work-day-scheduler)
+[Scheduler Deployed Website](https://mjgiannelli.github.io/work-day-scheduler/)
